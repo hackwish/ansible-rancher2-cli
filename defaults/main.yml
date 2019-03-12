@@ -1,0 +1,4 @@
+---
+# defaults file for rancherv2-cli
+
+rancher2_cli_version: "v2.2.0-rc13"

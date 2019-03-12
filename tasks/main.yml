@@ -1,0 +1,8 @@
+---
+# tasks file for rancherv2-cli
+
+- include: 01-get-cli.yml
+  tags: rancher2-cli-get
+
+- include: 02-configure-cli.yml
+  tags: rancher2-cli-configure

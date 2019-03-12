@@ -1,0 +1,30 @@
+---
+
+- name: Verify CLI exists
+  stat: path=/opt/rancher2-cli/rancher-linux-amd64-{{ rancher2_cli_version }}.tar.gz
+  register: cli_stat
+
+- name: Unarchive CLI
+  unarchive:
+    src: /opt/rancher2-cli/rancher-linux-amd64-{{ rancher2_cli_version }}.tar.gz
+    dest: /opt/rancher2-cli/
+    remote_src: yes
+
+- name: Configure CLI on system bin.
+  file:
+    src: "/opt/rancher2-cli/rancher-{{ rancher2_cli_version }}/rancher"
+    dest: "/usr/bin/rancher2"
+    state: link
+  when: cli_stat.stat.exists
+
+- name: Configure CLI on system sbin.
+  file:
+    src: "/opt/rancher2-cli/rancher-{{ rancher2_cli_version }}/rancher"
+    dest: "/usr/sbin/rancher2"
+    state: link
+  when: cli_stat.stat.exists
+
+- command: rancher2 --version
+  register: result
+  failed_when: false
+  changed_when: false
